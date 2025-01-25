@@ -1,0 +1,28 @@
+trigger:
+  - development
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "22"
+
+  - task: Npm@1
+    inputs:
+      command: "install"
+
+  - task: AngularCLI@1
+    displayName: Build Front-end Development
+    inputs:
+      command: "build"
+      prod: false
+      arguments: "--configuration development --aot --output-hashing=all --output-path=dist/development"
+      DisableAnalytics: false
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "dist"
+      ArtifactName: "boilerplate-angular"
+      publishLocation: "Container"

@@ -1,0 +1,142 @@
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Angular Boilerplate Demo</h1>
+
+    <!-- Section 1: Inputs -->
+    <section class="mb-5">
+        <h3>Inputs</h3>
+        <form class="row g-3">
+            <div class="col-md-6">
+                <label for="nameInput" class="form-label">Name</label>
+                <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
+            </div>
+            <div class="col-md-6">
+                <label for="emailInput" class="form-label">Email</label>
+                <input type="email" class="form-control" id="emailInput" placeholder="Enter your email">
+            </div>
+            <div class="col-12">
+                <label for="messageInput" class="form-label">Message</label>
+                <textarea class="form-control" id="messageInput" rows="3" placeholder="Write your message"></textarea>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="mb-5">
+        <form [formGroup]="formGroup" class="needs-validation">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nome</label>
+                <input id="name" type="text" class="form-control" formControlName="name"
+                    placeholder="Digite seu nome" />
+                <div *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched" class="text-danger">
+                    <small *ngIf="formGroup.get('name')?.hasError('required')">O nome é obrigatório.</small>
+                    <small *ngIf="formGroup.get('name')?.hasError('minlength')">
+                        O nome deve ter pelo menos 3 caracteres.
+                    </small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" type="email" class="form-control" formControlName="email"
+                    placeholder="Digite seu email" />
+                <div *ngIf="formGroup.get('email')?.invalid && formGroup.get('email')?.touched" class="text-danger">
+                    <small *ngIf="formGroup.get('email')?.hasError('required')">O email é obrigatório.</small>
+                    <small *ngIf="formGroup.get('email')?.hasError('email')">Email inválido.</small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="cpf" class="form-label">CPF</label>
+                <input id="cpf" type="text" class="form-control" formControlName="cpf" placeholder="000.000.000-00" />
+                <div *ngIf="formGroup.get('cpf')?.invalid && formGroup.get('cpf')?.touched" class="text-danger">
+                    <small *ngIf="formGroup.get('cpf')?.hasError('required')">O CPF é obrigatório.</small>
+                    <small *ngIf="formGroup.get('cpf')?.hasError('cpfInvalid')">CPF inválido.</small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="cnpj" class="form-label">CNPJ</label>
+                <input id="cnpj" type="text" class="form-control" formControlName="cnpj"
+                    placeholder="00.000.000/0000-00" />
+                <div *ngIf="formGroup.get('cnpj')?.invalid && formGroup.get('cnpj')?.touched" class="text-danger">
+                    <small *ngIf="formGroup.get('cnpj')?.hasError('required')">O CNPJ é obrigatório.</small>
+                    <small *ngIf="formGroup.get('cnpj')?.hasError('cnpjInvalid')">CNPJ inválido.</small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Telefone</label>
+                <input id="phone" type="text" class="form-control" formControlName="phone" placeholder="(00) 00000-0000" />
+                <div *ngIf="formGroup.get('phone')?.invalid && formGroup.get('phone')?.touched" class="text-danger">
+                  <small *ngIf="formGroup.get('phone')?.hasError('required')">O telefone é obrigatório.</small>
+                  <small *ngIf="formGroup.get('phone')?.hasError('phoneInvalid')">Número de telefone inválido.</small>
+                </div>
+              </div>              
+
+            <div class="mb-3">
+                <label for="disableControl" class="form-label">Campo Desativado</label>
+                <input id="disableControl" type="text" class="form-control" formControlName="disableControl"
+                    placeholder="Desativado" />
+                <div *ngIf="formGroup.get('disableControl')?.invalid" class="text-danger">
+                    <small>Campo obrigatório, mas está desativado.</small>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="formGroup.invalid">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Section 2: Table -->
+    <section class="mb-5">
+        <h3>Table</h3>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Section 3: Pipes -->
+    <section class="mb-5">
+        <h3>Pipes</h3>
+        <p>
+            <strong>Original Text:</strong> {{ sampleText }}
+        </p>
+        <p>
+            <strong>Uppercase:</strong> {{ sampleText | uppercase }}
+        </p>
+        <p>
+            <strong>Lowercase:</strong> {{ sampleText | lowercase }}
+        </p>
+        <p>
+            <strong>Date:</strong> {{ today | date:'fullDate' }}
+        </p>
+        <p>
+            <strong>Currency:</strong> {{ amount | currency:'BRL' }}
+        </p>
+        <p>
+            <strong>CPF:</strong> {{ cpfExample | cpf }}
+        </p>
+        <p>
+            <strong>CNPJ:</strong> {{ cnpjExample | cnpj }}
+        </p>
+        <p>
+            <strong>Phone number:</strong> {{ phoneNumber | phone }}
+        </p>
+    </section>
+</div>
